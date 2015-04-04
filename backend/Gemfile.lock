@@ -5,6 +5,15 @@ GIT
     active_model_serializers (0.10.0.pre)
       activemodel (>= 4.0)
 
+GIT
+  remote: git://github.com/stripe/stripe-ruby.git
+  revision: a980110740490b25bd2d60b33967306991348f70
+  specs:
+    stripe (1.20.4)
+      json (~> 1.8.1)
+      mime-types (>= 1.25, < 3.0)
+      rest-client (~> 1.4)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -67,6 +76,8 @@ GEM
     columnize (0.9.0)
     diff-lcs (1.2.5)
     docile (1.1.5)
+    domain_name (0.5.23)
+      unf (>= 0.0.5, < 1.0.0)
     dotenv (2.0.1)
     dotenv-rails (2.0.1)
       dotenv (= 2.0.1)
@@ -97,6 +108,8 @@ GEM
       guard-compat (~> 1.0)
     hike (1.2.3)
     hitimes (1.2.2)
+    http-cookie (1.0.2)
+      domain_name (~> 0.5)
     i18n (0.7.0)
     json (1.8.2)
     kgio (2.9.3)
@@ -119,6 +132,7 @@ GEM
     minitest (5.5.1)
     multi_json (1.11.0)
     nenv (0.2.0)
+    netrc (0.10.3)
     newrelic_rpm (3.11.1.284)
     nokogiri (1.6.6.2)
       mini_portile (~> 0.6.0)
@@ -180,6 +194,10 @@ GEM
     rb-fsevent (0.9.4)
     rb-inotify (0.9.5)
       ffi (>= 0.5.0)
+    rest-client (1.8.0)
+      http-cookie (>= 1.0.2, < 2.0)
+      mime-types (>= 1.16, < 3.0)
+      netrc (~> 0.7)
     rspec-core (3.1.7)
       rspec-support (~> 3.1.0)
     rspec-expectations (3.1.2)
@@ -227,6 +245,9 @@ GEM
       hitimes
     tzinfo (1.2.2)
       thread_safe (~> 0.1)
+    unf (0.1.4)
+      unf_ext
+    unf_ext (0.0.6)
     unicorn (4.8.3)
       kgio (~> 2.6)
       rack
@@ -263,4 +284,5 @@ DEPENDENCIES
   rspec-rails (~> 3.1.0)
   rubocop
   spring
+  stripe!
   unicorn
