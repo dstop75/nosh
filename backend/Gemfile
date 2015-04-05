@@ -6,6 +6,7 @@ ruby '2.2.0'
   gem 'newrelic_rpm'
   gem 'rack-cors'
   gem 'nokogiri'
+  gem 'bcrypt-ruby', '~> 3.1.5'
   gem 'stripe', github: 'stripe/stripe-ruby'
   gem 'active_model_serializers', github: 'rails-api/active_model_serializers'
 group :development, :test do
@@ -19,6 +20,7 @@ group :development, :test do
   gem 'pry-rails'
   gem 'factory_girl_rails', '~> 4.0'
   gem 'faker'
+  gem 'database_cleaner', '~> 1.4.0'
   gem 'codeclimate-test-reporter', require: nil
 end
 group :development do
