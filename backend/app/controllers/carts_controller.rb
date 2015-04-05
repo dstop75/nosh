@@ -2,22 +2,16 @@ class CartsController < ApplicationController
   before_filter :authenticate, only: [:index]
   before_action :set_cart, only: [:show, :update, :destroy]
 
-  # GET /carts
-  # GET /carts.json
   def index
     @carts = Cart.all
 
     render json: @carts
   end
 
-  # GET /carts/1
-  # GET /carts/1.json
   def show
     render json: @cart
   end
 
-  # POST /carts
-  # POST /carts.json
   def create
     @cart = Cart.new(cart_params)
 
@@ -28,8 +22,6 @@ class CartsController < ApplicationController
     end
   end
 
-  # PATCH/PUT /carts/1
-  # PATCH/PUT /carts/1.json
   def update
     @cart = Cart.find(params[:id])
 
@@ -40,8 +32,6 @@ class CartsController < ApplicationController
     end
   end
 
-  # DELETE /carts/1
-  # DELETE /carts/1.json
   def destroy
     @cart.destroy
 

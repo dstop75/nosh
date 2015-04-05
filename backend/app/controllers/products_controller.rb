@@ -2,22 +2,16 @@ class ProductsController < ApplicationController
   before_filter :authenticate, only: [:create, :update, :destroy]
   before_action :set_product, only: [:show, :update, :destroy]
 
-  # GET /products
-  # GET /products.json
   def index
     @products = Product.all
 
     render json: @products
   end
 
-  # GET /products/1
-  # GET /products/1.json
   def show
     render json: @product
   end
 
-  # POST /products
-  # POST /products.json
   def create
     @product = Product.new(product_params)
 
@@ -28,8 +22,6 @@ class ProductsController < ApplicationController
     end
   end
 
-  # PATCH/PUT /products/1
-  # PATCH/PUT /products/1.json
   def update
     @product = Product.find(params[:id])
 
@@ -40,8 +32,6 @@ class ProductsController < ApplicationController
     end
   end
 
-  # DELETE /products/1
-  # DELETE /products/1.json
   def destroy
     @product.destroy
 
