@@ -7,6 +7,8 @@ ruby '2.2.0'
   gem 'rack-cors'
   gem 'nokogiri'
   gem 'bcrypt-ruby', '~> 3.1.5'
+  gem 'aws-sdk'
+  gem 'paperclip', "~> 4.2"
   gem 'stripe', github: 'stripe/stripe-ruby'
   gem 'active_model_serializers', github: 'rails-api/active_model_serializers'
 group :development, :test do
