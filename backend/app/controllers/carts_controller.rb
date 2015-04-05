@@ -1,4 +1,5 @@
 class CartsController < ApplicationController
+  before_filter :authenticate, only: [:index]
   before_action :set_cart, only: [:show, :update, :destroy]
 
   # GET /carts
