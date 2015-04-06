@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  before_filter :authenticate, only: [:index, :show, :update, :destroy]
+  before_filter :authenticate, only: [:show, :update, :destroy]
   before_action :set_user, only: [:show, :update, :destroy]
 
   def sign_in

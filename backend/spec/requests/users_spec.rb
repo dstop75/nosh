@@ -7,11 +7,29 @@ DatabaseCleaner.strategy = :truncation
 RSpec.describe "Users Requests" do
   before(:all) do
     DatabaseCleaner.clean
-    @user = FactoryGirl.build(:user)
+  end
+
+  describe '#index' do
+    it 'should return a list of users when requested by an admin' do
+      @users = FactoryGirl.create_list(:user, 4)
+      admin = FactoryGirl.create(:user, admin: true)
+
+      get '/admin/users',
+      nil,
+      {
+        'Accept' => Mime::JSON,
+        'Content-Type' => Mime::JSON.to_s,
+        'authorization' => "Token token=#{admin.token}"
+      }
+      expect(response).to be_success
+      users_json = JSON.parse(response.body)
+      expect(users_json.length).to eq 5
+    end
   end
 
   describe "#create" do
     it "should create a new user" do
+      @user = FactoryGirl.build(:user)
       post "/users",
       { user:
         { email: @user.email,
@@ -20,7 +38,10 @@ RSpec.describe "Users Requests" do
           password: @user.password
         }
       }.to_json,
-      { 'Accept' => Mime::JSON, 'Content-Type' => Mime::JSON.to_s }
+      {
+        'Accept' => Mime::JSON,
+        'Content-Type' => Mime::JSON.to_s
+      }
       expect(response).to be_success
       expect(response.content_type).to be Mime::JSON
       token = JSON.parse(response.body)

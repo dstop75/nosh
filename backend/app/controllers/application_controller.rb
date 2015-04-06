@@ -15,6 +15,7 @@ class ApplicationController < ActionController::API
     end
 
     def require_admin
+      authenticate
       unless @current_user.admin?
         head :forbidden
       end
