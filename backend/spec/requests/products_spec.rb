@@ -45,7 +45,11 @@ RSpec.describe "Products", :type => :request do
           image_url: @product.image_url
         }
       }.to_json,
-      { 'Accept' => Mime::JSON, 'Content-Type' => Mime::JSON.to_s, 'authorization' => "Token token=#{@user.token}"}
+      {
+        'Accept' => Mime::JSON,
+        'Content-Type' => Mime::JSON.to_s,
+        'authorization' => "Token token=#{@user.token}"
+      }
       expect(response).to be_success
       expect(response.content_type).to be Mime::JSON
       product_json = JSON.parse(response.body)
@@ -64,7 +68,11 @@ RSpec.describe "Products", :type => :request do
           name: 'new product name'
         }
       }.to_json,
-      { 'Accept' => Mime::JSON, 'Content-Type' => Mime::JSON.to_s, 'authorization' => "Token token=#{@user.token}"}
+      {
+        'Accept' => Mime::JSON,
+        'Content-Type' => Mime::JSON.to_s,
+        'authorization' => "Token token=#{@user.token}"
+      }
       expect(response).to be_success
       expect(response.content_type).to be Mime::JSON
       product_json = JSON.parse(response.body)
@@ -72,6 +80,19 @@ RSpec.describe "Products", :type => :request do
       expect(product_json['description']). to eq @product.description
       expect(product_json['price']). to eq @product.price.to_s
       expect(product_json['image_url']). to eq @product.image_url
+    end
+  end
+
+  describe 'DELETE /products/id' do
+    it 'should destroy a product' do
+      delete "/products/#{@product.id}",
+      nil,
+      {
+        'Accept' => Mime::JSON,
+        'Content-Type' => Mime::JSON.to_s,
+        'authorization' => "Token token=#{@user.token}"
+      }
+      expect(response.status).to eq 204
     end
   end
 end
