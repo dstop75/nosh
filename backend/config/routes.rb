@@ -1,8 +1,15 @@
 Rails.application.routes.draw do
+  get '/amazon/sign_key/:id', to: 'amazon#sign_key'
   resources :products, except: [:new, :edit]
   resources :orders, except: [:new, :edit]
   resources :carts, except: [:new, :edit]
-  resources :users, except: [:new, :edit]
+  resources :users, except: [:index, :new, :edit] do
+    post :sign_in, on: :collection
+  end
+  namespace :admin do
+    resources :users, only: [:index]
+  end
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
@@ -25,7 +32,7 @@ Rails.application.routes.draw do
   #       post 'toggle'
   #     end
   #
-  #     collection do
+  #     users do
   #       get 'sold'
   #     end
   #   end
