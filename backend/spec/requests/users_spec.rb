@@ -4,7 +4,7 @@ require 'pry'
 
 DatabaseCleaner.strategy = :truncation
 
-RSpec.describe "Users Requests" do
+RSpec.describe 'Users Requests' do
   before(:all) do
     DatabaseCleaner.clean
   end
@@ -27,12 +27,13 @@ RSpec.describe "Users Requests" do
     end
   end
 
-  describe "#create" do
-    it "should create a new user" do
+  describe '#create' do
+    it 'should create a new user' do
       @user = FactoryGirl.build(:user)
-      post "/users",
-      { user:
-        { email: @user.email,
+      post '/users',
+      {
+        user: {
+          email: @user.email,
           first_name: @user.first_name,
           last_name: @user.last_name,
           password: @user.password
@@ -46,6 +47,21 @@ RSpec.describe "Users Requests" do
       expect(response.content_type).to be Mime::JSON
       token = JSON.parse(response.body)
       expect(token['token'].length).to be(32)
+    end
+  end
+
+  describe '#sign_in' do
+    it 'should authenticate a user and return their token and id' do
+      @user = FactoryGirl.create(:user)
+      post '/users/sign_in',
+      {
+        email: @user.email,
+        password: @user.password
+      }
+      expect(response).to be_success
+      credentials = JSON.parse(response.body)
+      expect(credentials['token']).to eq @user.token
+      expect(credentials['id']).to eq @user.id
     end
   end
 end
