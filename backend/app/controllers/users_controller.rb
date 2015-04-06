@@ -20,7 +20,7 @@ class UsersController < ApplicationController
     user = User.new(user_params)
 
     if user.save
-      render json: user, status: :created, location: user
+      render json: { token: user.token, id: user.id }, status: :created
     else
       render json: user.errors, status: :unprocessable_entity
     end
@@ -47,6 +47,6 @@ class UsersController < ApplicationController
     end
 
     def user_params
-      params.require(:user).permit(:email, :first_name, :last_name, :password_digest, :token)
+      params.require(:user).permit(:email, :first_name, :last_name, :password, :token)
     end
 end
