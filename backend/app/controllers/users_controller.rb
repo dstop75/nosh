@@ -12,6 +12,10 @@ class UsersController < ApplicationController
     end
   end
 
+  def sign_out
+    head :ok
+  end
+
   def show
     render json: @user
   end

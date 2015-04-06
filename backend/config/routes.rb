@@ -5,6 +5,7 @@ Rails.application.routes.draw do
   resources :carts, except: [:new, :edit]
   resources :users, except: [:index, :new, :edit] do
     post :sign_in, on: :collection
+    get :sign_out, on: :collection
   end
   namespace :admin do
     resources :users, only: [:index]
