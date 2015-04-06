@@ -8,6 +8,8 @@ class User < ActiveRecord::Base
   has_one :cart
   has_many :orders
 
+  before_create :generate_token
+
   def generate_token
     return if token.present?
     begin
