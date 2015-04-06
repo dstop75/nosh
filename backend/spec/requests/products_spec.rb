@@ -8,6 +8,7 @@ RSpec.describe "Products", :type => :request do
 
   before(:all) do
     DatabaseCleaner.clean
+    @user = FactoryGirl.create(:user)
     @products = FactoryGirl.create_list(:product, 10)
     @product = @products.first
   end
@@ -30,6 +31,25 @@ RSpec.describe "Products", :type => :request do
       expect(product_json['description']).to eq @product.description
       expect(product_json['price']).to eq @product.price.to_s
       expect(product_json['image_url']).to eq @product.image_url
+    end
+  end
+
+  describe 'POST /products' do
+    it "should create a new product" do
+      @product = FactoryGirl.build(:product)
+      post "/products", {
+        product: {
+          name: @product.name,
+          description: @product.description,
+          price: @product.price,
+          image_url: @product.image_url
+        }
+      }.to_json,
+      { 'Accept' => Mime::JSON, 'Content-Type' => Mime::JSON.to_s, 'authorization' => "Token token=#{@user.token}"}
+      expect(response).to be_success
+      expect(response.content_type).to be Mime::JSON
+      product_json = JSON.parse(response.body)
+      expect(product_json['name']).to eq @product.name
     end
   end
 end
