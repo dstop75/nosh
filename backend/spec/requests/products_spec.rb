@@ -50,6 +50,28 @@ RSpec.describe "Products", :type => :request do
       expect(response.content_type).to be Mime::JSON
       product_json = JSON.parse(response.body)
       expect(product_json['name']).to eq @product.name
+      expect(product_json['description']). to eq @product.description
+      expect(product_json['price']). to eq @product.price.to_s
+      expect(product_json['image_url']). to eq @product.image_url
+    end
+  end
+
+  describe 'PATCH /products/id' do
+    it 'should update a product' do
+      patch "/products/#{@product.id}",
+      {
+        product: {
+          name: 'new product name'
+        }
+      }.to_json,
+      { 'Accept' => Mime::JSON, 'Content-Type' => Mime::JSON.to_s, 'authorization' => "Token token=#{@user.token}"}
+      expect(response).to be_success
+      expect(response.content_type).to be Mime::JSON
+      product_json = JSON.parse(response.body)
+      expect(product_json['name']). to eq 'new product name'
+      expect(product_json['description']). to eq @product.description
+      expect(product_json['price']). to eq @product.price.to_s
+      expect(product_json['image_url']). to eq @product.image_url
     end
   end
 end

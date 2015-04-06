@@ -26,7 +26,7 @@ class ProductsController < ApplicationController
     @product = Product.find(params[:id])
 
     if @product.update(product_params)
-      head :no_content
+      render json: @product, status: :ok
     else
       render json: @product.errors, status: :unprocessable_entity
     end
