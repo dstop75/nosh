@@ -13,4 +13,10 @@ class ApplicationController < ActionController::API
         @current_user = User.find_by(token: token)
       end
     end
+
+    def require_admin
+      unless @current_user.admin?
+        head :forbidden
+      end
+    end
 end
