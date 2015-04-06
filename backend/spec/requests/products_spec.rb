@@ -93,6 +93,7 @@ RSpec.describe "Products", :type => :request do
         'authorization' => "Token token=#{@user.token}"
       }
       expect(response.status).to eq 204
+      expect(Product.all.length).to eq 9
     end
   end
 end
