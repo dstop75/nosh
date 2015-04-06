@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150405195345) do
+ActiveRecord::Schema.define(version: 20150406170306) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -24,6 +24,14 @@ ActiveRecord::Schema.define(version: 20150405195345) do
 
   add_index "carts", ["user_id"], name: "index_carts_on_user_id", using: :btree
 
+  create_table "carts_products", id: false, force: :cascade do |t|
+    t.integer "cart_id",    null: false
+    t.integer "product_id", null: false
+  end
+
+  add_index "carts_products", ["cart_id", "product_id"], name: "index_carts_products_on_cart_id_and_product_id", using: :btree
+  add_index "carts_products", ["product_id", "cart_id"], name: "index_carts_products_on_product_id_and_cart_id", using: :btree
+
   create_table "orders", force: :cascade do |t|
     t.integer  "user_id"
     t.datetime "created_at", null: false
@@ -31,6 +39,14 @@ ActiveRecord::Schema.define(version: 20150405195345) do
   end
 
   add_index "orders", ["user_id"], name: "index_orders_on_user_id", using: :btree
+
+  create_table "orders_products", id: false, force: :cascade do |t|
+    t.integer "order_id",   null: false
+    t.integer "product_id", null: false
+  end
+
+  add_index "orders_products", ["order_id", "product_id"], name: "index_orders_products_on_order_id_and_product_id", using: :btree
+  add_index "orders_products", ["product_id", "order_id"], name: "index_orders_products_on_product_id_and_order_id", using: :btree
 
   create_table "products", force: :cascade do |t|
     t.string   "name",                                null: false
