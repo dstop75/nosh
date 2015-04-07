@@ -2,7 +2,6 @@
 
 angular.module('NoshApp').factory('AuthFactory', ['$http', '$window', 'ServerUrl', function($http, $window, ServerUrl) {
     var login = function(credentials) {
-        console.log(credentials);
         return $http.post(ServerUrl + '/users/sign_in', credentials).success(function(response) {
             _storeSession(response);
         });
