@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
   get '/amazon/sign_key/:id', to: 'amazon#sign_key'
-  resources :products, except: [:new, :edit]
+  resources :products, only: [:index, :show]
   resources :orders, except: [:new, :edit]
   resources :carts, except: [:new, :edit]
   resources :users, except: [:index, :new, :edit] do
@@ -9,6 +9,7 @@ Rails.application.routes.draw do
   end
   namespace :admin do
     resources :users, only: [:index]
+    resources :products, only: [:create, :update, :destroy]
   end
 
   # The priority is based upon order of creation: first created -> highest priority.
