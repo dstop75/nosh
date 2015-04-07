@@ -14,6 +14,11 @@ angular.module('NoshApp').config(['$routeProvider', function($routeProvider) {
             controller: 'ProductsController',
             controllerAs: 'productsController'
         })
+        .when('/admin', {
+            templateUrl: 'views/admin.html',
+            controller: 'AdminController',
+            controllerAs: 'adminController'
+        })
         .otherwise({
             redirectTo: '/'
         });

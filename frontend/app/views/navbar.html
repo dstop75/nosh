@@ -39,7 +39,7 @@
         <li><a href="#/">Home <span class="sr-only">(current)</span></a></li>
         <li ng-if="!navbarController.isLoggedIn()"><a ng-href="#/login">Login</a></li>
         <li ng-if="navbarController.isLoggedIn()"><a href="javascript:void(0)" ng-click="navbarController.logout()">Logout</a></li>
-        <li ng-if="navbarController.isAdmin()"><a href="javascript:void(0)" >Admin</a></li>
+        <li ng-if="navbarController.isAdmin()"><a ng-href="#/admin">Admin</a></li>
         <!-- <li ng-if="navbarController.isLoggedIn()"><a href="javascript:void(0)">Logged in as:</a></li> -->
         <li><a ng-href="#/products">Products</a></li>
         <!-- <li class="dropdown">
