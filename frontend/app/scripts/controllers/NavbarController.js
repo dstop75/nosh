@@ -11,6 +11,10 @@ function navbarController(AuthFactory, $location) {
         return AuthFactory.isAuthenticated();
     };
 
+    vm.isAdmin = function() {
+        return AuthFactory.isAdmin();
+    };
+
     vm.logout = function() {
         AuthFactory.logout().then(function() {
             $location.path('/');

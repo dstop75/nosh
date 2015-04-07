@@ -20,6 +20,12 @@ angular.module('NoshApp').factory('AuthFactory', ['$http', '$window', 'ServerUrl
         return false;
     };
 
+    var isAdmin = function() {
+        var data = JSON.parse($window.localStorage.getItem('nc-user'));
+        if(data) { return data.admin; }
+        return false;
+    };
+
     // var clearStorage = function() {};
 
     var _storeSession = function(data) {
@@ -30,7 +36,8 @@ angular.module('NoshApp').factory('AuthFactory', ['$http', '$window', 'ServerUrl
     return {
         login: login,
         logout: logout,
-        isAuthenticated: isAuthenticated
+        isAuthenticated: isAuthenticated,
+        isAdmin: isAdmin
         // clearStorage: clearStorage
     };
 
