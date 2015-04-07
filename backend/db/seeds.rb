@@ -34,3 +34,20 @@ users = User.create([
         token: "hqjb423sqc09n6f5pd47ah7f044b70ou",
         admin: false
         }])
+
+products = Product.create([
+  {
+    name: "Product 1",
+    description: "The first product",
+    price: 14.99
+    },
+    {
+      name: "Product 2",
+      description: "The second product",
+      price: 4.99
+      },
+      {
+        name: "Product 3",
+        description: "The third product",
+        price: 10.99
+        }])
