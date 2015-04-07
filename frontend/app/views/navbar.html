@@ -1,0 +1,9 @@
+<nav>
+  <ul>
+    <li><a href="#/">Home</a></li>
+    <li ng-if="!navbarController.isLoggedIn()"><a ng-href="#/login">Login</a></li>
+    <li ng-if="navbarController.isLoggedIn()"><a href="javascript:void(0)" ng-click="navbarController.logout()">Logout</a></li>
+    <li ng-if="navbarController.isLoggedIn()"><a href="javascript:void(0)">Some other text if I'm authenticated</a></li>
+    <li ng-if="navbarController.isLoggedIn()"><a ng-href="#/products">Products</a></li>
+  </ul>
+</nav>
