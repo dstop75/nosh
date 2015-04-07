@@ -4,18 +4,18 @@ require 'database_cleaner'
 
 DatabaseCleaner.strategy = :truncation
 
-RSpec.describe "Products", :type => :request do
+RSpec.describe 'Products', :type => :request do
 
   before(:all) do
     DatabaseCleaner.clean
-    @user = FactoryGirl.create(:user)
+    @user = FactoryGirl.create(:user, admin: true)
     @products = FactoryGirl.create_list(:product, 10)
     @product = @products.first
   end
 
-  describe "GET /products" do
-    it "gets all the products" do
-      get "/products"
+  describe 'GET /products' do
+    it 'should get all the products' do
+      get '/products'
       expect(response).to be_success
       products_json  = JSON.parse(response.body)
       expect(products_json.length).to eq 10
@@ -23,7 +23,7 @@ RSpec.describe "Products", :type => :request do
   end
 
   describe 'GET /products/id' do
-    it "should retrieve a single task by id and return json" do
+    it 'should retrieve a single task by id and return json' do
       get "/products/#{@product.id}"
       expect(response).to be_success
       product_json = JSON.parse(response.body)
@@ -35,9 +35,9 @@ RSpec.describe "Products", :type => :request do
   end
 
   describe 'POST /products' do
-    it "should create a new product" do
+    it 'should create a new product when submitted by admin user' do
       @product = FactoryGirl.build(:product)
-      post "/products", {
+      post '/admin/products', {
         product: {
           name: @product.name,
           description: @product.description,
@@ -61,8 +61,8 @@ RSpec.describe "Products", :type => :request do
   end
 
   describe 'PATCH /products/id' do
-    it 'should update a product' do
-      patch "/products/#{@product.id}",
+    it 'should update a product when submitted by admin user' do
+      patch "/admin/products/#{@product.id}",
       {
         product: {
           name: 'new product name'
@@ -84,8 +84,8 @@ RSpec.describe "Products", :type => :request do
   end
 
   describe 'DELETE /products/id' do
-    it 'should destroy a product' do
-      delete "/products/#{@product.id}",
+    it 'should destroy a product when submitted by admin user' do
+      delete "/admin/products/#{@product.id}",
       nil,
       {
         'Accept' => Mime::JSON,
