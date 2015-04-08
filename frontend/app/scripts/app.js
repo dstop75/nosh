@@ -19,7 +19,8 @@ angular
         'ngSanitize',
         'ngTouch',
         'MainController',
-        'MainDirective'
+        'MainDirective',
+        'angularFileUpload'
         ])
     .run(function($rootScope, $http, $window, $location, AuthFactory, ProductsFactory) {
         if (AuthFactory.isAuthenticated()) {
