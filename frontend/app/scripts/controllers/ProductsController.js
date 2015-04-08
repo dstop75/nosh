@@ -2,9 +2,17 @@
 
 angular.module('MainController').controller('ProductsController', productsController);
 
-productsController.$inject = ['ProductsFactory'];
+productsController.$inject = ['ProductsFactory', '$location'];
 
-function productsController(ProductsFactory) {
+function productsController(ProductsFactory, $location) {
     var vm = this;
     vm.products = ProductsFactory.products;
+    vm.newProduct = ProductsFactory.newProduct;
+
+    vm.addProduct = function(newProduct) {
+        ProductsFactory.addProduct(newProduct).then(function() {
+            vm.newProduct = {};
+            $location.path('/products');
+        });
+    };
 }
