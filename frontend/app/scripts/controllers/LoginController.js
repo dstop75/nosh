@@ -8,7 +8,7 @@ function loginController(AuthFactory, $location) {
     var vm = this;
 
     vm.login = function(credentials) {
-        AuthFactory.login(credentials).then(function(response) {
+        AuthFactory.login(credentials).then(function() {
             vm.credentials = {};
             $location.path('/');
         });
