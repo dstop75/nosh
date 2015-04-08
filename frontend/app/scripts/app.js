@@ -25,15 +25,9 @@ angular
         if (AuthFactory.isAuthenticated()) {
             var data = JSON.parse($window.localStorage.getItem('nc-user'));
             $http.defaults.headers.common.Authorization = 'Token token=' + data.token;
-        } else {
-            $location.path('/login');
         }
 
         $rootScope.$on('$routeChangeStart', function() {
-            if(!AuthFactory.isAuthenticated()) {
-                $location.path('/login');
-            } else {
-                ProductsFactory.getProducts();
-            }
+            ProductsFactory.getProducts();
         });
     });
