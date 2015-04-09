@@ -14,13 +14,11 @@
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav navbar-right">
-        <li><a href="#/">Home <span class="sr-only">(current)</span></a></li>
-        <li ng-if="!navbarController.isLoggedIn()"><a ng-href="#/login">Login</a></li>
-        <li ng-if="navbarController.isLoggedIn()"><a href="javascript:void(0)" ng-click="navbarController.logout()">Logout</a></li>
-        <li ng-if="navbarController.isAdmin()"><a ng-href="#/admin">Admin</a></li>
-        <!-- <li ng-if="navbarController.isLoggedIn()"><a href="javascript:void(0)">Logged in as:</a></li> -->
         <li><a ng-href="#/products">Products</a></li>
         <li><a ng-href="#/videos">Videos</a></li>
+        <li ng-if="navbarController.isAdmin()"><a ng-href="#/admin">Owner</a></li>
+        <li ng-if="!navbarController.isLoggedIn()"><a ng-href="#/login">Login</a></li>
+        <li ng-if="navbarController.isLoggedIn()"><a href="javascript:void(0)" ng-click="navbarController.logout()">Logout</a></li>
       </ul>
     </div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->
