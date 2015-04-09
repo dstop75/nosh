@@ -39,15 +39,24 @@ products = Product.create([
   {
     name: "Product 1",
     description: "The first product",
-    price: 14.99
+    price: 14.99,
+    image_url: "https://s3.amazonaws.com/nosh-cookie-co/nosh-photos-by-john-caplice/001.jpg"
     },
     {
       name: "Product 2",
       description: "The second product",
-      price: 4.99
+      price: 4.99,
+      image_url: "https://s3.amazonaws.com/nosh-cookie-co/nosh-photos-by-john-caplice/027.jpg"
       },
       {
         name: "Product 3",
         description: "The third product",
-        price: 10.99
-        }])
+        price: 10.99,
+        image_url: "https://s3.amazonaws.com/nosh-cookie-co/nosh-photos-by-john-caplice/074.jpg"
+        },
+        {
+          name: "Product 4",
+          description: "The fourth product",
+          price: 10.99,
+          image_url: "https://s3.amazonaws.com/nosh-cookie-co/nosh-photos-by-john-caplice/081.jpg"
+          }])
