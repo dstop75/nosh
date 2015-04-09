@@ -25,7 +25,8 @@ angular
     .run(function($rootScope, $http, $window, $location, AuthFactory, ProductsFactory) {
         if (AuthFactory.isAuthenticated()) {
             var data = JSON.parse($window.localStorage.getItem('nc-user'));
-            $http.defaults.headers.common.Authorization = 'Token token=' + data.token;
+            // default header interferes with aws, refactor:
+            // $http.defaults.headers.common.Authorization = 'Token token=' + data.token;
         }
 
         $rootScope.$on('$routeChangeStart', function() {

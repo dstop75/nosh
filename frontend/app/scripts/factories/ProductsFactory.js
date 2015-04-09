@@ -2,33 +2,50 @@
 
 angular
     .module('NoshApp')
-    .factory('ProductsFactory', ProductsFactory);
-
-
-    ProductsFactory.$inject = ['$http', '$window', 'ServerUrl', '$upload'];
-
-    function ProductsFactory($http, $window, ServerUrl, $upload) {
+    .factory('ProductsFactory', ['$http', '$window', 'ServerUrl', '$upload', function($http, $window, ServerUrl, $upload) {
         var products = [];
 
         var addProduct = function(newProduct) {
-            // user must be admin in Rails
-            var file = newProduct.image;
-            debugger;
-            var user = JSON.parse($window.localStorage.getItem('nc-user'));
-            var config = {
+            var suffix,
+            file = newProduct.image[0],
+            user = JSON.parse($window.localStorage.getItem('nc-user')),
+            railsConfig = {
                 headers: {
                     'AUTHORIZATION': 'Token token=' + user.token
                 }
-            };
+            },
+            urlReady = file.type.replace(/[%&\/#"\\]/g, function(m) {
+                return (m === '"' || m === '\\') ? ' ' : '%' + m.charCodeAt(0).toString(16);
+            });
 
-            var data = {
-                product: {
-                    name: newProduct.name,
-                    description: newProduct.description,
-                    price: newProduct.price
-                }
-            };
-            return $http.post(ServerUrl + '/admin/products', data, config).success(getProducts);
+            return $http.get(ServerUrl + '/amazon/sign_key/' + urlReady)
+            .success(function(response) {
+                console.log(file);
+                suffix = response.key;
+                $upload.upload({
+                    url: 'https://s3.amazonaws.com/nosh-cookie-co',
+                    type: 'POST',
+                    fields: {
+                        key: response.key,
+                        AWSAccessKeyId: response.access_key,
+                        policy: response.policy,
+                        signature: response.signature,
+                        'Content-Type': file.type === '' ? 'application/octet-stream' : file.type
+                    },
+                    file: file
+                });
+            })
+            .then(function() {
+                var data = {
+                    product: {
+                        name: newProduct.name,
+                        description: newProduct.description,
+                        price: newProduct.price,
+                        image_url: 'https://s3.amazonaws.com/nosh-cookie-co/' + suffix
+                    }
+                };
+                $http.post(ServerUrl + '/admin/products', data, railsConfig);
+            });
         };
 
         var getProducts = function() {
@@ -46,4 +63,4 @@ angular
             getProducts: getProducts,
             addProduct: addProduct
         };
-    }
+    }]);
