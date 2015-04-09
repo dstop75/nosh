@@ -14,8 +14,6 @@ angular
         vm.addProduct = function(newProduct) {
             ProductsFactory.addProduct(newProduct).then(function() {
                 vm.newProduct = {};
-                ProductsFactory.getProducts();
-                $location.path('/products');
             });
         };
 
