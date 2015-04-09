@@ -57,9 +57,14 @@ angular
             });
         };
 
+        var hasImage = function(product) {
+            return product.image_url !== null;
+        };
+
         return {
             products: products,
             getProducts: getProducts,
-            addProduct: addProduct
+            addProduct: addProduct,
+            hasImage: hasImage
         };
     }]);

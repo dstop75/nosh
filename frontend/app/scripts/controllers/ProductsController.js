@@ -17,4 +17,8 @@ angular
                 $location.path('/products');
             });
         };
+
+        vm.hasImage = function(product) {
+            return ProductsFactory.hasImage(product);
+        };
     }
