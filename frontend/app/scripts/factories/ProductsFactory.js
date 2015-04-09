@@ -20,7 +20,6 @@ angular
 
             return $http.get(ServerUrl + '/amazon/sign_key/' + urlReady)
             .success(function(response) {
-                console.log(file);
                 suffix = response.key;
                 $upload.upload({
                     url: 'https://s3.amazonaws.com/nosh-cookie-co',
