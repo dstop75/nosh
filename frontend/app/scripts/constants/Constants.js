@@ -1,3 +1,3 @@
 'use strict';
 
-angular.module('NoshApp').constant('ServerUrl', 'http://localhost:3000');
+angular.module('NoshApp').constant('ServerUrl', 'https://dry-retreat-5402.herokuapp.com/');
