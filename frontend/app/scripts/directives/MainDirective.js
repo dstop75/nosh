@@ -1,3 +1,4 @@
 'use strict';
 
-angular.module('MainDirective', []);
+angular
+    .module('MainDirective', []);

@@ -1,9 +1,11 @@
 'use strict';
 
-angular.module('MainController').controller('HomeController', homeController);
+angular
+    .module('MainController')
+    .controller('HomeController', homeController);
 
-homeController.$inject = [];
+    homeController.$inject = [];
 
-function homeController() {
-    //
-}
+    function homeController() {
+        //
+    }

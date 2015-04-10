@@ -1,4 +1,5 @@
 'use strict';
+
 angular
     .module('MainDirective')
     .directive('newProductForm' [function() {
