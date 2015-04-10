@@ -7,7 +7,7 @@
         <li class="list-group-item">
           <h3>{{product.name}}</h3>
           <p>{{product.description}}</p>
-          <p>{{product.price}}</p>
+          <p>{{product.price | currency:"$"}}</p>
           <p><img ng-if="productsController.hasImage(product)" ng-src="{{product.image_url}}" alt="{{product.name}}"></p>
         </li>
       </ul>
