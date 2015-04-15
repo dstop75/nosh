@@ -27,8 +27,6 @@ angular
             return false;
         };
 
-        // var clearStorage = function() {};
-
         var _storeSession = function(data) {
             $window.localStorage.setItem('nc-user', JSON.stringify(data));
             $http.defaults.headers.common.authorization = 'Token token=' + data.token;
@@ -39,7 +37,6 @@ angular
             logout: logout,
             isAuthenticated: isAuthenticated,
             isAdmin: isAdmin
-            // clearStorage: clearStorage
         };
 
     }]);
