@@ -15,5 +15,9 @@ RSpec.describe OrdersController, type: :routing do
       expect(post: '/orders').to route_to('orders#create')
     end
 
+    it 'routes to #update' do
+      expect(put: '/orders/1').to route_to('orders#update', id: '1')
+    end
+
   end
 end
