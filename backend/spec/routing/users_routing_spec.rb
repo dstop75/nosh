@@ -11,5 +11,9 @@ RSpec.describe UsersController, type: :routing do
       expect(get: 'users/sign_out').to route_to('users#sign_out')
     end
 
+    it "routes to #index" do
+      expect(get: 'admin/users').to route_to('admin/users#index')
+    end
+
   end
 end
