@@ -4,11 +4,12 @@ require 'database_cleaner'
 
 DatabaseCleaner.strategy = :truncation
 
-RSpec.describe 'Products', :type => :request do
+RSpec.describe 'Products', type: :request do
 
   before(:all) do
     DatabaseCleaner.clean
-    @user = FactoryGirl.create(:user, admin: true)
+    @admin_user = FactoryGirl.create(:user, admin: true)
+    @non_admin_user = FactoryGirl.create(:user)
     @products = FactoryGirl.create_list(:product, 10)
     @product = @products.first
   end
@@ -35,8 +36,12 @@ RSpec.describe 'Products', :type => :request do
   end
 
   describe 'POST /products' do
-    it 'should create a new product when submitted by admin user' do
+
+    before(:all) do
       @product = FactoryGirl.build(:product)
+    end
+
+    it 'should create a new product when submitted by admin user' do
       post '/admin/products', {
         product: {
           name: @product.name,
@@ -46,9 +51,9 @@ RSpec.describe 'Products', :type => :request do
         }
       }.to_json,
       {
-        'Accept' => Mime::JSON,
-        'Content-Type' => Mime::JSON.to_s,
-        'authorization' => "Token token=#{@user.token}"
+        'Accept': Mime::JSON,
+        'Content-Type': Mime::JSON.to_s,
+        'authorization': "Token token=#{@admin_user.token}"
       }
       expect(response).to be_success
       expect(response.content_type).to be Mime::JSON
@@ -57,6 +62,23 @@ RSpec.describe 'Products', :type => :request do
       expect(product_json['description']). to eq @product.description
       expect(product_json['price']). to eq @product.price.to_s
       expect(product_json['image_url']). to eq @product.image_url
+    end
+
+    it 'should reject the submission when submitted by a non-admin user' do
+      post '/admin/products', {
+        product: {
+          name: @product.name,
+          description: @product.description,
+          price: @product.price,
+          image_url: @product.image_url
+        }
+      }.to_json,
+      {
+        'Accept': Mime::JSON,
+        'Content-Type': Mime::JSON.to_s,
+        'authorization': "Token token=#{@non_admin_user.token}"
+      }
+      expect(response).not_to be_success
     end
   end
 
@@ -69,9 +91,9 @@ RSpec.describe 'Products', :type => :request do
         }
       }.to_json,
       {
-        'Accept' => Mime::JSON,
-        'Content-Type' => Mime::JSON.to_s,
-        'authorization' => "Token token=#{@user.token}"
+        'Accept': Mime::JSON,
+        'Content-Type': Mime::JSON.to_s,
+        'authorization': "Token token=#{@admin_user.token}"
       }
       expect(response).to be_success
       expect(response.content_type).to be Mime::JSON
@@ -88,9 +110,9 @@ RSpec.describe 'Products', :type => :request do
       delete "/admin/products/#{@product.id}",
       nil,
       {
-        'Accept' => Mime::JSON,
-        'Content-Type' => Mime::JSON.to_s,
-        'authorization' => "Token token=#{@user.token}"
+        'Accept': Mime::JSON,
+        'Content-Type': Mime::JSON.to_s,
+        'authorization': "Token token=#{@admin_user.token}"
       }
       expect(response.status).to eq 204
       expect(Product.all.length).to eq 9
