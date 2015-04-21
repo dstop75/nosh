@@ -15,5 +15,9 @@ RSpec.describe ProductsController, type: :routing do
       expect(post: 'admin/products').to route_to('admin/products#create')
     end
 
+    it 'routes to #update' do
+      expect(put: 'admin/products/1').to route_to('admin/products#update', id: '1')
+    end
+
   end
 end
