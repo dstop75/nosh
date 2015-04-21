@@ -8,9 +8,10 @@ RSpec.describe 'Products', type: :request do
 
   before(:all) do
     DatabaseCleaner.clean
+    @num = 10
     @admin_user = FactoryGirl.create(:user, admin: true)
     @non_admin_user = FactoryGirl.create(:user)
-    @products = FactoryGirl.create_list(:product, 10)
+    @products = FactoryGirl.create_list(:product, @num)
     @product = @products.first
   end
 
@@ -19,7 +20,7 @@ RSpec.describe 'Products', type: :request do
       get '/products'
       expect(response).to be_success
       products_json  = JSON.parse(response.body)
-      expect(products_json.length).to eq 10
+      expect(products_json.length).to eq @num
     end
   end
 
@@ -62,7 +63,7 @@ RSpec.describe 'Products', type: :request do
       expect(product_json['description']). to eq @product.description
       expect(product_json['price']). to eq @product.price.to_s
       expect(product_json['image_url']). to eq @product.image_url
-      expect(Product.all.length).to eq 11
+      expect(Product.all.length).to eq @num + 1
     end
 
     it 'should reject the submission when submitted by a non-admin user' do
@@ -80,7 +81,7 @@ RSpec.describe 'Products', type: :request do
         'authorization': "Token token=#{@non_admin_user.token}"
       }
       expect(response).not_to be_success
-      expect(Product.all.length).to eq 10
+      expect(Product.all.length).to eq @num
     end
   end
 
@@ -132,7 +133,7 @@ RSpec.describe 'Products', type: :request do
         'authorization': "Token token=#{@admin_user.token}"
       }
       expect(response.status).to eq 204
-      expect(Product.all.length).to eq 9
+      expect(Product.all.length).to eq @num - 1
     end
 
     it 'should reject the deletion when submitted by a non-admin user' do
@@ -144,7 +145,7 @@ RSpec.describe 'Products', type: :request do
         'authorization': "Token token=#{@non_admin_user.token}"
       }
       expect(response).not_to be_success
-      expect(Product.all.length).to eq 10
+      expect(Product.all.length).to eq @num
     end
   end
 end
