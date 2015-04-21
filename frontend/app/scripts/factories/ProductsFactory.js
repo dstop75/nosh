@@ -9,7 +9,9 @@ angular
                 headers: {
                     'AUTHORIZATION': 'Token token=' + user.token
                 }
-            };
+            },
+            file,
+            suffix;
 
         var urlify = function (file) {
             var ready = file.type.replace(/[%&\/#"\\]/g, function(m) {
@@ -18,14 +20,7 @@ angular
             return ready;
         };
 
-        var addProduct = function(newProduct) {
-            var suffix;
-
-            if (newProduct.image) {
-                var file = newProduct.image[0],
-                urlReady = urlify(file);
-                return $http.get(ServerUrl + '/amazon/sign_key/' + urlReady)
-                .success(function(response) {
+        var sendToAWS = function(response) {
                     suffix = response.key;
                     $upload.upload({
                         url: 'https://s3.amazonaws.com/nosh-cookie-co',
@@ -39,7 +34,15 @@ angular
                         },
                         file: file
                     });
-                })
+                };
+
+        var addProduct = function(newProduct) {
+
+            if (newProduct.image) {
+                file = newProduct.image[0];
+                var urlReady = urlify(file);
+                return $http.get(ServerUrl + '/amazon/sign_key/' + urlReady)
+                .success(sendToAWS)
                 .then(function() {
                     var data = {
                         product: {
