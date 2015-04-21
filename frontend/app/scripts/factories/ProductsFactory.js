@@ -40,6 +40,10 @@ angular
             return $http.post(ServerUrl + '/admin/products', data, railsConfig);
         };
 
+        var getAWSsignKey = function(urlReady) {
+            return $http.get(ServerUrl + '/amazon/sign_key/' + urlReady);
+        };
+
         var addProduct = function(newProduct) {
             var data = {
                 product: {
@@ -52,7 +56,7 @@ angular
             if (newProduct.image) {
                 file = newProduct.image[0];
                 var urlReady = urlify(file);
-                return $http.get(ServerUrl + '/amazon/sign_key/' + urlReady)
+                return getAWSsignKey(urlReady)
                 .success(sendToAWS)
                 .then(function() {
                     data.product.image_url = 'https://s3.amazonaws.com/nosh-cookie-co/' + suffix;
