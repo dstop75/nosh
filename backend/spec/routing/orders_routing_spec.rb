@@ -19,5 +19,9 @@ RSpec.describe OrdersController, type: :routing do
       expect(put: '/orders/1').to route_to('orders#update', id: '1')
     end
 
+    it 'routes to #destroy' do
+      expect(delete: '/orders/1').to route_to('orders#destroy', id: '1')
+    end
+
   end
 end
