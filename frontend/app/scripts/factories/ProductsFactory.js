@@ -3,7 +3,13 @@
 angular
     .module('NoshApp')
     .factory('ProductsFactory', ['$http', '$window', 'ServerUrl', '$upload', function($http, $window, ServerUrl, $upload) {
-        var products = [];
+        var products = [],
+            user = JSON.parse($window.localStorage.getItem('nc-user')),
+            railsConfig = {
+                headers: {
+                    'AUTHORIZATION': 'Token token=' + user.token
+                }
+            };
 
         var urlify = function (file) {
             var ready = file.type.replace(/[%&\/#"\\]/g, function(m) {
@@ -13,13 +19,7 @@ angular
         };
 
         var addProduct = function(newProduct) {
-            var suffix,
-            user = JSON.parse($window.localStorage.getItem('nc-user')),
-            railsConfig = {
-                headers: {
-                    'AUTHORIZATION': 'Token token=' + user.token
-                }
-            };
+            var suffix;
 
             if (newProduct.image) {
                 var file = newProduct.image[0],
