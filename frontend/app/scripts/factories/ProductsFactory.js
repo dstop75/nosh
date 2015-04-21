@@ -5,6 +5,13 @@ angular
     .factory('ProductsFactory', ['$http', '$window', 'ServerUrl', '$upload', function($http, $window, ServerUrl, $upload) {
         var products = [];
 
+        var urlify = function (file) {
+            var ready = file.type.replace(/[%&\/#"\\]/g, function(m) {
+                    return (m === '"' || m === '\\') ? ' ' : '%' + m.charCodeAt(0).toString(16);
+                });
+            return ready;
+        };
+
         var addProduct = function(newProduct) {
             var suffix,
             user = JSON.parse($window.localStorage.getItem('nc-user')),
@@ -16,9 +23,7 @@ angular
 
             if (newProduct.image) {
                 var file = newProduct.image[0],
-                urlReady = file.type.replace(/[%&\/#"\\]/g, function(m) {
-                    return (m === '"' || m === '\\') ? ' ' : '%' + m.charCodeAt(0).toString(16);
-                });
+                urlReady = urlify(file);
                 return $http.get(ServerUrl + '/amazon/sign_key/' + urlReady)
                 .success(function(response) {
                     suffix = response.key;
