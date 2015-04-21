@@ -27,5 +27,9 @@ RSpec.describe UsersController, type: :routing do
       expect(put: "/users/1").to route_to("users#update", id: "1")
     end
 
+    it "routes to #destroy" do
+      expect(delete: "/users/1").to route_to("users#destroy", id: "1")
+    end
+
   end
 end
