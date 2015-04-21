@@ -23,9 +23,6 @@ angular
         'angularFileUpload'
         ])
     .run(function($rootScope, $http, $window, $location, AuthFactory, ProductsFactory) {
-        if (AuthFactory.isAuthenticated()) {
-            var data = JSON.parse($window.localStorage.getItem('nc-user'));
-        }
 
         $rootScope.$on('$routeChangeStart', ProductsFactory.getProducts);
     });
