@@ -66,8 +66,7 @@ RSpec.describe 'Users Requests' do
   end
 
   describe '#sign_in' do
-    it 'should authenticate a user and return their token and id' do
-      @user = FactoryGirl.create(:user)
+    it 'should authenticate a user and return their token, id, and admin status' do
       post '/users/sign_in',
       {
         email: @user.email,
@@ -77,6 +76,22 @@ RSpec.describe 'Users Requests' do
       credentials = JSON.parse(response.body)
       expect(credentials['token']).to eq @user.token
       expect(credentials['id']).to eq @user.id
+      expect(credentials['admin']).to eq @user.admin
+      expect(credentials['admin']).to eq false
+    end
+
+    it 'should authenticate an admin user and return their token, id, and admin status' do
+      post '/users/sign_in',
+      {
+        email: @admin.email,
+        password: @admin.password
+      }
+      expect(response).to be_success
+      credentials = JSON.parse(response.body)
+      expect(credentials['token']).to eq @admin.token
+      expect(credentials['id']).to eq @admin.id
+      expect(credentials['admin']).to eq @admin.admin
+      expect(credentials['admin']).to eq true
     end
   end
 end
