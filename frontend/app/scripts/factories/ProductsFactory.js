@@ -36,6 +36,10 @@ angular
             });
         };
 
+        var sendToRails = function(data) {
+            return $http.post(ServerUrl + '/admin/products', data, railsConfig);
+        };
+
         var addProduct = function(newProduct) {
             var data = {
                 product: {
@@ -52,10 +56,10 @@ angular
                 .success(sendToAWS)
                 .then(function() {
                     data.product.image_url = 'https://s3.amazonaws.com/nosh-cookie-co/' + suffix;
-                    $http.post(ServerUrl + '/admin/products', data, railsConfig);
+                    sendToRails(data);
                 });
             } else {
-                return $http.post(ServerUrl + '/admin/products', data, railsConfig);
+                return sendToRails(data);
             }
         };
 
