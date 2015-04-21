@@ -62,6 +62,7 @@ RSpec.describe 'Products', type: :request do
       expect(product_json['description']). to eq @product.description
       expect(product_json['price']). to eq @product.price.to_s
       expect(product_json['image_url']). to eq @product.image_url
+      expect(Product.all.length).to eq 11
     end
 
     it 'should reject the submission when submitted by a non-admin user' do
@@ -79,6 +80,7 @@ RSpec.describe 'Products', type: :request do
         'authorization': "Token token=#{@non_admin_user.token}"
       }
       expect(response).not_to be_success
+      expect(Product.all.length).to eq 10
     end
   end
 
@@ -131,6 +133,18 @@ RSpec.describe 'Products', type: :request do
       }
       expect(response.status).to eq 204
       expect(Product.all.length).to eq 9
+    end
+
+    it 'should reject the deletion when submitted by a non-admin user' do
+      delete "/admin/products/#{@product.id}",
+      nil,
+      {
+        'Accept': Mime::JSON,
+        'Content-Type': Mime::JSON.to_s,
+        'authorization': "Token token=#{@non_admin_user.token}"
+      }
+      expect(response).not_to be_success
+      expect(Product.all.length).to eq 10
     end
   end
 end
