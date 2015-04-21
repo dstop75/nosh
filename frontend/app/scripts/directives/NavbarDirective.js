@@ -10,8 +10,8 @@ angular
             controllerAs: 'navbarController',
             bindToController: true,
             scope: {},
-            link: function(scope, element, attrs) {
-                //
-            }
+            // link: function(scope, element, attrs) {
+
+            // }
         };
     }]);
