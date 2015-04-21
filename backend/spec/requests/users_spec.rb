@@ -17,9 +17,9 @@ RSpec.describe 'Users Requests' do
       get '/admin/users',
       nil,
       {
-        'Accept' => Mime::JSON,
-        'Content-Type' => Mime::JSON.to_s,
-        'authorization' => "Token token=#{admin.token}"
+        'Accept': Mime::JSON,
+        'Content-Type': Mime::JSON.to_s,
+        'authorization': "Token token=#{admin.token}"
       }
       expect(response).to be_success
       users_json = JSON.parse(response.body)
@@ -40,8 +40,8 @@ RSpec.describe 'Users Requests' do
         }
       }.to_json,
       {
-        'Accept' => Mime::JSON,
-        'Content-Type' => Mime::JSON.to_s
+        'Accept': Mime::JSON,
+        'Content-Type': Mime::JSON.to_s
       }
       expect(response).to be_success
       expect(response.content_type).to be Mime::JSON
