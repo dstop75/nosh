@@ -11,7 +11,8 @@ angular
                 }
             },
             file,
-            suffix;
+            suffix,
+            awsUrl = 'https://s3.amazonaws.com/nosh-cookie-co/';
 
         var urlify = function (file) {
             var ready = file.type.replace(/[%&\/#"\\]/g, function(m) {
@@ -23,7 +24,7 @@ angular
         var sendToAWS = function(response) {
             suffix = response.key;
             $upload.upload({
-                url: 'https://s3.amazonaws.com/nosh-cookie-co',
+                url: awsUrl,
                 type: 'POST',
                 fields: {
                     key: response.key,
@@ -59,7 +60,7 @@ angular
                 return getAWSsignKey(urlReady)
                 .success(sendToAWS)
                 .then(function() {
-                    data.product.image_url = 'https://s3.amazonaws.com/nosh-cookie-co/' + suffix;
+                    data.product.image_url = awsUrl + suffix;
                     sendToRails(data);
                 });
             } else {
