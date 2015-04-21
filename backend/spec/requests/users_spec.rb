@@ -7,23 +7,24 @@ DatabaseCleaner.strategy = :truncation
 RSpec.describe 'Users Requests' do
   before(:all) do
     DatabaseCleaner.clean
+    @num = 4
+    @users = FactoryGirl.create_list(:user, @num)
+    @admin = FactoryGirl.create(:user, admin: true)
   end
 
   describe '#index' do
     it 'should return a list of users when requested by an admin' do
-      @users = FactoryGirl.create_list(:user, 4)
-      admin = FactoryGirl.create(:user, admin: true)
-
       get '/admin/users',
       nil,
       {
         'Accept': Mime::JSON,
         'Content-Type': Mime::JSON.to_s,
-        'authorization': "Token token=#{admin.token}"
+        'authorization': "Token token=#{@admin.token}"
       }
       expect(response).to be_success
       users_json = JSON.parse(response.body)
-      expect(users_json.length).to eq 5
+      # @users + @admin
+      expect(users_json.length).to eq @num + 1
     end
   end
 
@@ -47,6 +48,8 @@ RSpec.describe 'Users Requests' do
       expect(response.content_type).to be Mime::JSON
       token = JSON.parse(response.body)
       expect(token['token'].length).to be(32)
+      # @users + @admin + @user
+      expect(User.all.length).to eq @num + 2
     end
   end
 
