@@ -21,22 +21,29 @@ angular
         };
 
         var sendToAWS = function(response) {
-                    suffix = response.key;
-                    $upload.upload({
-                        url: 'https://s3.amazonaws.com/nosh-cookie-co',
-                        type: 'POST',
-                        fields: {
-                            key: response.key,
-                            AWSAccessKeyId: response.access_key,
-                            policy: response.policy,
-                            signature: response.signature,
-                            'Content-Type': file.type === '' ? 'application/octet-stream' : file.type
-                        },
-                        file: file
-                    });
-                };
+            suffix = response.key;
+            $upload.upload({
+                url: 'https://s3.amazonaws.com/nosh-cookie-co',
+                type: 'POST',
+                fields: {
+                    key: response.key,
+                    AWSAccessKeyId: response.access_key,
+                    policy: response.policy,
+                    signature: response.signature,
+                    'Content-Type': file.type === '' ? 'application/octet-stream' : file.type
+                },
+                file: file
+            });
+        };
 
         var addProduct = function(newProduct) {
+            var data = {
+                product: {
+                    name: newProduct.name,
+                    description: newProduct.description,
+                    price: newProduct.price
+                }
+            };
 
             if (newProduct.image) {
                 file = newProduct.image[0];
@@ -44,24 +51,10 @@ angular
                 return $http.get(ServerUrl + '/amazon/sign_key/' + urlReady)
                 .success(sendToAWS)
                 .then(function() {
-                    var data = {
-                        product: {
-                            name: newProduct.name,
-                            description: newProduct.description,
-                            price: newProduct.price,
-                            image_url: 'https://s3.amazonaws.com/nosh-cookie-co/' + suffix
-                        }
-                    };
+                    data.product.image_url = 'https://s3.amazonaws.com/nosh-cookie-co/' + suffix;
                     $http.post(ServerUrl + '/admin/products', data, railsConfig);
                 });
             } else {
-                var data = {
-                    product: {
-                        name: newProduct.name,
-                        description: newProduct.description,
-                        price: newProduct.price
-                    }
-                };
                 return $http.post(ServerUrl + '/admin/products', data, railsConfig);
             }
         };
