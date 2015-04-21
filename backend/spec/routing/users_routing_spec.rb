@@ -7,5 +7,9 @@ RSpec.describe UsersController, type: :routing do
       expect(post: 'users/sign_in').to route_to('users#sign_in')
     end
 
+    it 'routes to #sign_out' do
+      expect(get: 'users/sign_out').to route_to('users#sign_out')
+    end
+
   end
 end
