@@ -23,5 +23,9 @@ RSpec.describe UsersController, type: :routing do
       expect(post: "/users").to route_to("users#create")
     end
 
+    it "routes to #update" do
+      expect(put: "/users/1").to route_to("users#update", id: "1")
+    end
+
   end
 end
