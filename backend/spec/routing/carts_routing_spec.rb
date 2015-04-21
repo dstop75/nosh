@@ -19,5 +19,9 @@ RSpec.describe CartsController, type: :routing do
       expect(put: "/carts/1").to route_to("carts#update", id: "1")
     end
 
+    it "routes to #destroy" do
+      expect(delete: "/carts/1").to route_to("carts#destroy", id: "1")
+    end
+
   end
 end
