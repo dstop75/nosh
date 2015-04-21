@@ -23,4 +23,3 @@ angular
     .controller('NavbarController', navbarController);
 
     navbarController.$inject = ['AuthFactory', '$location'];
-

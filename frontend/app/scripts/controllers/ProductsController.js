@@ -21,4 +21,3 @@ angular
     .controller('ProductsController', productsController);
 
     productsController.$inject = ['ProductsFactory'];
-

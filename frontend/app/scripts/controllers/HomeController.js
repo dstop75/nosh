@@ -9,4 +9,3 @@ angular
     .controller('HomeController', homeController);
 
     homeController.$inject = [];
-
