@@ -9,6 +9,7 @@ RSpec.describe 'Users Requests' do
     DatabaseCleaner.clean
     @num = 4
     @users = FactoryGirl.create_list(:user, @num)
+    @user = @users.first
     @admin = FactoryGirl.create(:user, admin: true)
   end
 
@@ -25,6 +26,17 @@ RSpec.describe 'Users Requests' do
       users_json = JSON.parse(response.body)
       # @users + @admin
       expect(users_json.length).to eq @num + 1
+    end
+
+    it 'should fail when requested by a non-admin' do
+      get '/admin/users',
+      nil,
+      {
+        'Accept': Mime::JSON,
+        'Content-Type': Mime::JSON.to_s,
+        'authorization': "Token token=#{@user.token}"
+      }
+      expect(response).not_to be_success
     end
   end
 
