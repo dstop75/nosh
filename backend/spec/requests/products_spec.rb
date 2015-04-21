@@ -103,6 +103,21 @@ RSpec.describe 'Products', type: :request do
       expect(product_json['price']). to eq @product.price.to_s
       expect(product_json['image_url']). to eq @product.image_url
     end
+
+    it 'should reject the update when submitted by a non-admin user' do
+      patch "/admin/products/#{@product.id}",
+      {
+        product: {
+          name: 'new product name'
+        }
+      }.to_json,
+      {
+        'Accept': Mime::JSON,
+        'Content-Type': Mime::JSON.to_s,
+        'authorization': "Token token=#{@non_admin_user.token}"
+      }
+      expect(response).not_to be_success
+    end
   end
 
   describe 'DELETE /products/id' do
