@@ -27,7 +27,5 @@ angular
             var data = JSON.parse($window.localStorage.getItem('nc-user'));
         }
 
-        $rootScope.$on('$routeChangeStart', function() {
-            ProductsFactory.getProducts();
-        });
+        $rootScope.$on('$routeChangeStart', ProductsFactory.getProducts);
     });
