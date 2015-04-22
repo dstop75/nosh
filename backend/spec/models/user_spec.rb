@@ -1,9 +1,20 @@
 require 'rails_helper'
 
 RSpec.describe User, type: :model do
+  before(:all) do
+    DatabaseCleaner.clean
+    @admin = FactoryGirl.build(:user, admin: true)
+    @user = FactoryGirl.build(:user)
+  end
+
   describe '.create' do
     it 'creates a new user' do
       expect(User.create()).to be_a User
     end
+
+    it 'is invalid without an email' do
+      expect(User.create(first_name: @user.first_name, last_name: @user.last_name, password: @user.password)).not_to be_valid
+    end
+
   end
 end
