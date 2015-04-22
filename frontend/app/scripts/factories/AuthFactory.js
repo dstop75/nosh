@@ -29,7 +29,7 @@ angular
 
         var _storeSession = function(data) {
             $window.localStorage.setItem('nc-user', JSON.stringify(data));
-            $http.defaults.headers.common.authorization = 'Token token=' + data.token;
+            // $http.defaults.headers.common.authorization = 'Token token=' + data.token;
         };
 
         return {
