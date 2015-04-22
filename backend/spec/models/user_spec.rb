@@ -16,5 +16,10 @@ RSpec.describe User, type: :model do
       expect(User.create(first_name: @user.first_name, last_name: @user.last_name, password: @user.password)).not_to be_valid
     end
 
+    it 'is invalid without a unique email' do
+      @taken = FactoryGirl.create(:user)
+      expect(User.create(email: @taken.email, first_name: @user.first_name, last_name: @user.last_name, password: @user.password)).not_to be_valid
+    end
+
   end
 end
