@@ -15,5 +15,9 @@ RSpec.describe Product, type: :model do
       expect(Product.create(description: @product.description, price: @product.price)).not_to be_valid
     end
 
+    it 'is invalid without a description' do
+      expect(Product.create(name: @product.name, price: @product.price)).not_to be_valid
+    end
+
   end
 end
