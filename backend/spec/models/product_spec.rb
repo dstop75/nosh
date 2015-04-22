@@ -23,5 +23,8 @@ RSpec.describe Product, type: :model do
       expect(Product.create(name: @product.name, description: @product.description)).not_to be_valid
     end
 
+    it 'is valid with a name, description, and price' do
+      expect(Product.create(name: @product.name, description: @product.description, price: @product.price)).to be_valid
+    end
   end
 end
