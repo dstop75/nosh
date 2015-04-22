@@ -30,7 +30,7 @@ RSpec.describe User, type: :model do
     end
 
     it 'is invalid without a password' do
-      expect(User.create(email: @user.email, first_name: @user.first_name, last_name: @user.last_name)).not_toto be_valid
+      expect(User.create(email: @user.email, first_name: @user.first_name, last_name: @user.last_name)).not_to be_valid
     end
 
     it 'is valid with all required attributes' do
