@@ -1,4 +1,8 @@
+require 'pry'
 require 'rails_helper'
+require 'database_cleaner'
+
+DatabaseCleaner.strategy = :truncation
 
 RSpec.describe User, type: :model do
   before(:all) do

@@ -1,4 +1,5 @@
-require "rails_helper"
+require 'pry'
+require 'rails_helper'
 
 RSpec.describe CartsController, type: :routing do
   describe "routing" do

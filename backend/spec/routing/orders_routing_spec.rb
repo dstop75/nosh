@@ -1,3 +1,4 @@
+require 'pry'
 require 'rails_helper'
 
 RSpec.describe OrdersController, type: :routing do
