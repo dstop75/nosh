@@ -33,5 +33,9 @@ RSpec.describe User, type: :model do
       expect(User.create(email: @user.email, first_name: @user.first_name, last_name: @user.last_name)).not_toto be_valid
     end
 
+    it 'is valid with all required attributes' do
+      expect(User.create(email: @user.email, first_name: @user.first_name, last_name: @user.last_name, password: @user.password)).to be_valid
+    end
+
   end
 end
