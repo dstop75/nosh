@@ -4,15 +4,24 @@ angular
     .module('NoshApp')
     .factory('ProductsFactory', ['$http', '$window', 'ServerUrl', '$upload', function($http, $window, ServerUrl, $upload) {
         var products = [],
-            user = JSON.parse($window.localStorage.getItem('nc-user')),
-            railsConfig = {
-                headers: {
-                    'AUTHORIZATION': 'Token token=' + user.token
-                }
-            },
+            user,
+            railsConfig,
             file,
             suffix,
             awsUrl = 'https://s3.amazonaws.com/nosh-cookie-co/';
+
+        var getUser = function() {
+            return JSON.parse($window.localStorage.getItem('nc-user'));
+        };
+
+        var configRails = function() {
+            user = getUser();
+            return {
+                headers: {
+                    'AUTHORIZATION': 'Token token=' + user.token
+                }
+            };
+        };
 
         var urlify = function (file) {
             var ready = file.type.replace(/[%&\/#"\\]/g, function(m) {
@@ -38,6 +47,7 @@ angular
         };
 
         var sendToRails = function(data) {
+            railsConfig = configRails();
             return $http.post(ServerUrl + '/admin/products', data, railsConfig);
         };
 
